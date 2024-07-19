@@ -1,0 +1,22 @@
+.infoCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+
+  background-color: #343434;
+  border-radius: 16px;
+  padding: 24px;
+
+  /* aspect-ratio: 1.25/1; */
+  width: 100%;
+  /* min-width: 200px; */
+}
+
+.infoCardTitle {
+  font-size: 20px;
+}
+
+.infoCardValue {
+  font-size: 32px;
+}
