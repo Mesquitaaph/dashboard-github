@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { Octokit } from 'octokit';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
+import githubLogo from './assets/github.svg';
+
 import './App.css'
 
 import { InfoCard } from './Components/InfoCard';
@@ -15,6 +15,7 @@ const octokit = new Octokit({
 
 interface RepoInfos {
   name: string;
+  html_url: string;
   stargazers_count: number;
   forks_count: number;
   watchers: number;
@@ -26,7 +27,6 @@ interface RepoInfos {
   }[];
   languagePercentages: any;
 }
-
 
 function App() {
   const [repo, setRepo] = useState<RepoInfos>();
@@ -74,6 +74,7 @@ function App() {
 
       const mostFamousRepo: RepoInfos = {
         name: result.data.name,
+        html_url: result.data.html_url,
         stargazers_count: result.data.stargazers_count,
         forks_count: result.data.forks_count,
         watchers: result.data.subscribers_count,
@@ -82,13 +83,11 @@ function App() {
         languagePercentages: languagePercentages
       }
 
-      // console.log(mostFamousRepo)
-
       setRepo(mostFamousRepo)
       
       return true
     } catch {
-      console.log("Error");
+      console.log("Erro! ");
 
       return false;
     }
@@ -132,20 +131,20 @@ function App() {
     getMostFamousRepo()
   }, []);
 
+  if(repo === undefined) {
+    return (
+      <div className="loadingScreen">
+        <img src={githubLogo} className="loadingLogo" alt="Github logo"/>
+      </div>
+    )
+  }
+
   return (
     <>
-      {/* <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div> */}
-      <h1 className="title">Dashboard de {repo?.name}</h1>
+      <h1 className="title">Dashboard de <a href={repo?.html_url} target="_blank">{repo?.name}</a></h1>
 
       <div className="infosSection">
-        <InfoCard title="Estrelas" value={repo?.stargazers_count}/>
+        <InfoCard title="Stars" value={repo?.stargazers_count}/>
         <InfoCard title="Forks" value={repo?.forks_count}/>
         <InfoCard title="Watchers" value={repo?.watchers}/>
       </div>
@@ -159,7 +158,7 @@ function App() {
                 margin={{
                   top: 5,
                   right: 8,
-                  left: -36,
+                  left: -24,
                   bottom: 40,
                 }}
                 barGap={5}
@@ -167,10 +166,10 @@ function App() {
                 onMouseLeave={() => setSelectedWeek(undefined)}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" style={{fill: 'white'}}/>
+                <XAxis dataKey="name" angle={45} tickMargin={24} style={{fill: 'white'}}/>
                 <YAxis style={{fill: 'white'}}/>
                 <Tooltip wrapperStyle={{color:'black'}} itemStyle={{color:'black'}}/>
-                <Bar dataKey="commits" stroke="white" onMouseEnter={(e) => setSelectedWeek(e.payload.index)}/>
+                <Bar dataKey="commits" stroke="#465DDE" strokeWidth={2} fill="#242424" onMouseEnter={(e) => setSelectedWeek(e.payload.index)}/>
               </BarChart>
             </ResponsiveContainer>
           </GraphContainer>
@@ -190,7 +189,7 @@ function App() {
                 <XAxis dataKey="name" angle={45} tickMargin={16} style={{fill: 'white'}}/>
                 <YAxis style={{fill: 'white'}}/>
                 <Tooltip wrapperStyle={{color:'black'}} itemStyle={{color:'black'}}/>
-                <Line dataKey="commits" stroke="white" />
+                <Line dataKey="commits" stroke="#465DDE" strokeWidth={2}/>
               </LineChart>
             </ResponsiveContainer>
           </GraphContainer>
@@ -212,7 +211,7 @@ function App() {
                 <XAxis dataKey="name" angle={45} tickMargin={24} style={{fill: 'white'}}/>
                 <YAxis scale="sqrt" style={{fill: 'white'}}/>
                 <Tooltip wrapperStyle={{color:'black'}} itemStyle={{color:'black'}} formatter={(value) => `${value}%`}/>
-                <Bar dataKey="Porcentagem" stroke="#aaaaaa" fill="#242424" strokeWidth={1}/>
+                <Bar dataKey="Porcentagem" stroke="#36904A" strokeWidth={2} fill="#242424" />
               </BarChart>
             </ResponsiveContainer>
           </GraphContainer>

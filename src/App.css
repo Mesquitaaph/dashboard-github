@@ -8,14 +8,21 @@
   gap: 16px;
 
   padding: 32px;
+  margin: auto;
 }
 
 .title {
   width: 100%;
+}
 
-  /* background-color: #343434; */
-  /* padding: 16px; */
-  /* border-radius: 16px; */
+.title a {
+  cursor: pointer;
+
+  color: rgb(170, 120, 26);
+}
+
+.title a:hover {
+  color: rgb(199, 169, 114);
 }
 
 .logo {
@@ -24,6 +31,7 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
@@ -31,18 +39,39 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.loadingScreen {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+}
+
+.loadingLogo {
+  height: 8em;
+  /* padding: 1.5em; */
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+	}
+
+	50% {
+		transform: scale(1.05);
+	}
+
+	100% {
+		transform: scale(0.95);
+	}
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .loadingLogo {
+    animation: pulse 2s infinite;
   }
 }
 
@@ -70,17 +99,7 @@
 .graphsContainer {
   display: flex;
   flex-direction: row;
-  width: 100%;
-
-  background-color: #343434;
-
-  padding: 16px;
-  border-radius: 16px;
-}
-
-.commitsGraphs {
-  display: flex;
-  flex-direction: row;
+  align-items: end;
   width: 100%;
 
   background-color: #343434;

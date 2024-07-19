@@ -8,9 +8,7 @@
   border-radius: 16px;
   padding: 24px;
 
-  /* aspect-ratio: 1.25/1; */
   width: 100%;
-  /* min-width: 200px; */
 }
 
 .infoCardTitle {
@@ -19,4 +17,5 @@
 
 .infoCardValue {
   font-size: 32px;
+  font-weight: bold;
 }
