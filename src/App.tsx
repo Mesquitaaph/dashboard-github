@@ -10,7 +10,7 @@ import { InfoCard } from './Components/InfoCard';
 import { GraphContainer } from './Components/GraphContainer';
 
 const octokit = new Octokit({ 
-  auth: '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'
+  auth: import.meta.env.REACT_APP_GITHUB_TOKEN
 });
 
 interface RepoInfos {
