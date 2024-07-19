@@ -196,7 +196,7 @@ function App() {
         </div>
         <div className="graphsContainer">
           <GraphContainer title="Porcentagem de cada linguagem encontrada no repositório">
-            <ResponsiveContainer width={"40%"} height={400}>
+            <ResponsiveContainer width={"100%"} height={400}>
               <BarChart 
                 data={getLanguageChart(repo?.languagePercentages)}
                 margin={{

@@ -81,6 +81,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 
   gap: 16px;
 }
@@ -117,4 +118,11 @@
 
   padding: 16px;
   border-radius: 16px;
+}
+
+@media (max-width: 1030px) {
+  #root {
+    width: 90%;
+    padding: 0;
+  }
 }
