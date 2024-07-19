@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Chart } from 'react-google-charts';
 
 export const barOptions = {
@@ -56,6 +56,9 @@ export const GoogleCharts = () => {
     return dataChart
   };
 
+  useEffect(() => {
+    setRepo(undefined)
+  })
 
   return <>
     <Chart
