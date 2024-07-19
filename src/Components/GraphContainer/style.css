@@ -11,3 +11,9 @@
   font-size: 18px;
   text-align: center;
 }
+
+@media (max-width: 1095px) {
+  .chartContainer {
+    flex: 1;
+  }
+}

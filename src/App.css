@@ -1,4 +1,5 @@
 #root {
+  background-color: #242424;
   width: 75%;
 
   display: flex;
@@ -25,20 +26,6 @@
   color: rgb(199, 169, 114);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
 .loadingScreen {
   box-sizing: border-box;
   display: flex;
@@ -48,32 +35,34 @@
   width: 100%;
 }
 
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(0.95);
+  }
+}
+
 .loadingLogo {
   height: 8em;
   /* padding: 1.5em; */
   will-change: filter;
   transition: filter 300ms;
+  animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-	0% {
-		transform: scale(0.95);
-	}
-
-	50% {
-		transform: scale(1.05);
-	}
-
-	100% {
-		transform: scale(0.95);
-	}
-}
-
+/* 
 @media (prefers-reduced-motion: no-preference) {
   .loadingLogo {
     animation: pulse 2s infinite;
   }
-}
+} */
 
 .infosSection {
   width: 100%;
@@ -100,13 +89,14 @@
 .graphsContainer {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: end;
   width: 100%;
 
   background-color: #343434;
 
   padding: 16px;
-  border-radius: 16px;
+  border-radius: 16px;  
 }
 
 .languagesGraph {

@@ -6,7 +6,7 @@ interface GraphContainerProps {
   children: any;
 }
 
-export const GraphContainer = ({title, style, children}:GraphContainerProps) => {
+export const GraphContainer = ({title, style, children}: GraphContainerProps) => {
   return (
     <div className="chartContainer" style={style}>
       <span className="chartTitle">{title}</span>

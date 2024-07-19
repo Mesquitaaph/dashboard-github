@@ -93,6 +93,7 @@ function App() {
     }
   };
 
+  // Retorna os dados dos commits nas últimas 4 semanas no formato do recharts.
   const getCommitsWeekChart = (weeks: RepoInfos["last4WeeksCommits"] | undefined) => {
     if(weeks === undefined) return [];
 
@@ -101,28 +102,40 @@ function App() {
     return data
   };
 
-  const getLanguageChart = (languages: RepoInfos["languagePercentages"] | undefined) => {
-    if(languages === undefined) return [];
-
-    const data = Object.keys(languages).map(lang => ({name: lang, Porcentagem: languages[lang].toFixed(3)}))
-
-    return data
-  };
-
+  // Retorna os dados dos commits nos dias das últimas 4 semanas no formato do recharts.
+  // Caso um semana seja selecionada, retorna apenas os seus dias
   const getCommitsDaysChart = (weeks: RepoInfos["last4WeeksCommits"] | undefined, selectedWeek: number | undefined) => {
     if(weeks === undefined) return [];
     
     const today = new Date()
 
     const dayInMilliseconds = 24*60*60*1000
+
+    // Guarda cada um dos dias das semanas em um array, em ordem cronológica
+    const days = weeks.map(week => week.days).flat()
+    
+    // Retorna a data relacionada ao índice da lista de dias
+    // Sabendo que são 4 semanas, 28 dias, posso encontrar os commits do dia de hoje com o today.getDay()
+    // considerando apenas os dias da última semana. Assim, trato hoje como o dia 0 e dias antes e depois como negativos e positivos, respectivamente.
+    // Após isso, basta somar o número de dias na data de hoje (dia -1 encontra a data de ontem, dia 1 encontra a data de amanhã)
     const indexDate = (index:number) => new Date(today.getTime() + (index-21-today.getDay()) * dayInMilliseconds)
-    const data = weeks.map(week => week.days).flat().map((commits, index) => ({
-      name: `${indexDate(index).getDate()}/${indexDate(index).getMonth()}`, commits: commits, index
+
+    const data = days.map((commits, index) => ({
+      name: `${indexDate(index).getDate()}/${indexDate(index).getMonth()+1}`, commits: commits, index
     }))
 
     if (selectedWeek !== undefined) {
       return data.filter((value) => Math.trunc(value.index/7) === selectedWeek)
     }
+
+    return data
+  };
+
+  // Retorna as porcentagens das linguagens encontradas no repositório no formato do recharts.
+  const getLanguageChart = (languages: RepoInfos["languagePercentages"] | undefined) => {
+    if(languages === undefined) return [];
+
+    const data = Object.keys(languages).map(lang => ({name: lang, Porcentagem: languages[lang].toFixed(3)}))
 
     return data
   };
@@ -151,7 +164,7 @@ function App() {
 
       <div className="graphsSection">
         <div className="graphsContainer">
-          <GraphContainer title="Commits totais nas últimas 4 semanas" style={{width: "50%"}}>
+          <GraphContainer title="Commits totais nas últimas 4 semanas" style={{ width: "30%", minWidth: "150px" }}>
             <ResponsiveContainer width={"100%"} height={400}>
               <BarChart 
                 data={getCommitsWeekChart(repo?.last4WeeksCommits)}
@@ -174,18 +187,21 @@ function App() {
             </ResponsiveContainer>
           </GraphContainer>
           
-          <GraphContainer title={selectedWeek === undefined ? "Commits nos dias das últimas 4 semanas" : `Commits nos dias da semana ${selectedWeek+1}`}>
+          <GraphContainer 
+            title={selectedWeek === undefined ? "Commits nos dias das últimas 4 semanas" : `Commits nos dias da semana ${selectedWeek+1}`} 
+            style={{ width: "70%", minWidth: "300px" }}
+          >
             <ResponsiveContainer width={"100%"} height={400}>
               <LineChart
                 data={getCommitsDaysChart(repo?.last4WeeksCommits, selectedWeek)}
                 margin={{
                   top: 5,
                   right: 9,
-                  left: 0,
+                  left: -24,
                   bottom: 40,
                 }}
                 >
-                <CartesianGrid strokeDasharray="3 3"/>
+                <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" angle={45} tickMargin={16} style={{fill: 'white'}}/>
                 <YAxis style={{fill: 'white'}}/>
                 <Tooltip wrapperStyle={{color:'black'}} itemStyle={{color:'black'}}/>
