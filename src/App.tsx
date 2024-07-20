@@ -189,7 +189,7 @@ function App() {
           
           <GraphContainer 
             title={selectedWeek === undefined ? "Commits nos dias das últimas 4 semanas" : `Commits nos dias da semana ${selectedWeek+1}`} 
-            style={{ width: "70%", minWidth: "300px" }}
+            style={{ width: "70%", minWidth: "250px" }}
           >
             <ResponsiveContainer width={"100%"} height={400}>
               <LineChart
